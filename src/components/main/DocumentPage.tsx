@@ -551,7 +551,7 @@ class DocumentPage extends Component<DocumentPageProps, MainPageState> {
       accounts,
       removeHelperContact,
       unshareAllWithHelperContact,
-      updateHelperContactPermissions
+      updateHelperContactPermissions,
     } = { ...this.props };
     return (
       <Fragment>
@@ -596,7 +596,9 @@ class DocumentPage extends Component<DocumentPageProps, MainPageState> {
                 className="network-container"
               >
                 <AccountSummary
-                  updateHelperContactPermissions={updateHelperContactPermissions}
+                  updateHelperContactPermissions={
+                    updateHelperContactPermissions
+                  }
                   helperContact={s}
                   unshareAllWithHelperContact={unshareAllWithHelperContact}
                   removeHelperContact={removeHelperContact}

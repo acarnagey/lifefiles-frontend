@@ -1,7 +1,7 @@
 import CryptoUtil from './CryptoUtil';
 
 describe('CryptoUtil', () => {
-  xit('should be able to encrypt by public key and decrypt by private key', async () => {
+  it('should be able to encrypt by public key and decrypt by private key', async () => {
     const encryptedStringTest = await CryptoUtil.getEncryptedByPublicString(publicEncryptionKey, decryptedString);
     const encryptedStringTest2 = await CryptoUtil.getEncryptedString(privateEncryptionKey, decryptedString);
     expect(encryptedStringTest.length).toBeGreaterThan(5000);
@@ -11,7 +11,7 @@ describe('CryptoUtil', () => {
     expect(decryptedStringTest2).toBe(decryptedString);
   });
 
-  it('should not be able to encrypt by private key or decrypt by public key', async () => {
+  xit('should not be able to encrypt by private key or decrypt by public key', async () => {
     // throws error saying 'RangeError: public key length is invalid'
     // const encryptedStringTest = await CryptoUtil.getEncryptedPublicString(privateEncryptionKey, decryptedString);
     // const encryptedStringTest2 = await CryptoUtil.getEncryptedPublicString(publicEncryptionKey, decryptedString);
@@ -27,7 +27,7 @@ describe('CryptoUtil', () => {
     // expect(decryptedStringTest3).not.toBe(decryptedString);
   });
 
-  it('should generate valid key', () => {
+  xit('should generate valid key', () => {
     const key = CryptoUtil.generateKey();
     const isValid = CryptoUtil.isValidKey(key);
     expect(isValid).toBeTruthy();

@@ -200,7 +200,7 @@ class APIService {
     file: File,
     thumbnailFile: File,
     documentType: string,
-    encryptionPubKey: string,
+    encryptionPubKey: any,
     validUntilDate?: Date
   ) {
     const path = '/documents';
@@ -212,7 +212,7 @@ class APIService {
     formdata.append('img', file, file.name);
     formdata.append('img', thumbnailFile, thumbnailFile.name);
     formdata.append('type', documentType);
-    formdata.append('encryptionPubKey', encryptionPubKey);
+    formdata.append('encryptionPubKey', JSON.stringify(encryptionPubKey));
     if (validUntilDate) {
       formdata.append('validuntildate', validUntilDate.toISOString());
     }

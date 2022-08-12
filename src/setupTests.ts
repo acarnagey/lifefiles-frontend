@@ -29,7 +29,7 @@ copyProps(window, global);
 
 (global as any).html2pdf = {};
 
-import jsPDF from 'jspdf/dist/jspdf.node.debug';
+// import jsPDF from 'jspdf/dist/jspdf.node.debug';
 // import { applyPlugin } from './node_modules/jspdf-autotable/dist/jspdf.plugin.autotable';
 
 // applyPlugin(jsPDF);

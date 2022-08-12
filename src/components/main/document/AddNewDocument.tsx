@@ -1,5 +1,4 @@
 import React, {Component, FormEvent} from 'react';
-import {Button} from 'reactstrap';
 import './AddNewDocument.scss';
 // NOTE: you can import svg's as react components this way
 // import newDocumentSvg from '../../../img/new-document.svg';
