@@ -21,7 +21,7 @@ class DocumentService extends AgentService {
     newFile: File,
     newThumbnailFile: File,
     documentType: string,
-    encryptionPubKey: any,
+    encryptionPubKey: string,
     validUntilDate?: Date
   ): Promise<any> {
     return await super.postDocument(

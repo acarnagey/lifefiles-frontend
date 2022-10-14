@@ -1,14 +1,14 @@
 import md5 from 'md5';
 // import jsPDF from 'jspdf';
-// import EthrDID from 'ethr-did';
+import EthrDID from 'ethr-did';
 import NotaryService from '../services/NotaryService';
 import NodeRSA from 'node-rsa';
-// import DidJWTVC from 'did-jwt-vc';
+import DidJWTVC from 'did-jwt-vc';
 import PDFUtil from './PdfUtil';
 import ImageUtil, { ImageType, ImageDetail } from './ImageUtil';
 
-// const createVerifiableCredential = DidJWTVC.createVerifiableCredential;
-// const createPresentation = DidJWTVC.createPresentation;
+const createVerifiableCredential = DidJWTVC.createVerifiableCredential;
+const createPresentation = DidJWTVC.createPresentation;
 
 class NotaryUtil {
   // To be called by the notary
@@ -32,11 +32,11 @@ class NotaryUtil {
     try {
       const didRes = await NotaryService.generateNewDid();
       const didAddress = didRes.didAddress;
-      const documentDID = 'did:key:' + didAddress;
+      const documentDID = 'did:ethr:' + didAddress;
 
       const vpDidRes = await NotaryService.generateNewDid();
       const vpDidAddress = vpDidRes.didAddress;
-      const vpDocumentDid = 'did:key:' + vpDidAddress;
+      const vpDocumentDid = 'did:ethr:' + vpDidAddress;
 
       const now = Date.now() as any;
       const issueTime = Math.floor(now / 1000);
@@ -75,7 +75,6 @@ class NotaryUtil {
 
       const documentHash = md5(this.arrayBuffertoBuffer(pdfArrayBuffer));
 
-      // FIXME: private key should be a string here
       const encryptedHash = this.encryptX509(notaryPrivateKey, documentHash);
 
       const vc = await this.createVC(
@@ -114,13 +113,13 @@ class NotaryUtil {
     notaryPublicKey,
     encryptedHash
   ) {
-    // const issuerEthrDid = new EthrDID({
-    //   address: issuerAddress,
-    //   privateKey: issuerPrivateKey,
-    // });
+    const issuerEthrDid = new EthrDID({
+      address: issuerAddress,
+      privateKey: issuerPrivateKey,
+    });
 
-    const ownerDID = 'did:key:' + ownerAddress;
-    const issuerDID = 'did:key:' + issuerAddress;
+    const ownerDID = 'did:ethr:' + ownerAddress;
+    const issuerDID = 'did:ethr:' + issuerAddress;
 
     const vcPayload = {
       sub: ownerDID,
@@ -135,6 +134,7 @@ class NotaryUtil {
 
         issuer: {
           id: issuerDID,
+          ensDomain: 'mypass.eth',
           notaryId,
           notaryPublicKey,
         },
@@ -148,6 +148,7 @@ class NotaryUtil {
 
         credentialSubject: {
           id: ownerDID,
+          ensDomain: 'mypass.eth',
           TexasDigitalNotary: {
             type: notaryType,
             signedDocumentHash: encryptedHash, //  The hash is encrypted with the notary priv key.
@@ -156,8 +157,8 @@ class NotaryUtil {
         },
       },
     };
-    // FIXME:
-    // const vcJwt = await createVerifiableCredential(vcPayload, issuerEthrDid);
+
+    const vcJwt = await createVerifiableCredential(vcPayload, issuerEthrDid);
     return vcJwt;
   }
 
